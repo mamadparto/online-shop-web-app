@@ -9,7 +9,7 @@ home page
 
     <h1>welcome{{user.username}}</h1>
 
-{%else%}
-    <p><a href={% url 'login' %}>login</a> | <a href="{% url 'signup' %}">signup</a></p>
+{% comment %} {%else%} {% endcomment %}
+    {% comment %} <p><a href={% url 'login' %}>login</a> | <a href="{% url 'signup' %}">signup</a></p> {% endcomment %}
 {% endif %}
 {% endblock content %}

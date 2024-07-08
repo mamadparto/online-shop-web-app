@@ -10,13 +10,6 @@
 </head>
 <body>
 
-    {% if user.is_authenticated %}
-    <form action="{% url 'logout' %}" method="post">
-              {% csrf_token %}
-    <button type="submit">Log out</button>
-   </form>
-   {%endif%}
-
     {% block content %}
     
     {% endblock content %}
