@@ -47,9 +47,11 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'allauth',
     'allauth.account',
-    
+
+    #local apps
     'accounts',
     'pages',
+    'products',
     
 ]
 
