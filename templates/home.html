@@ -5,11 +5,8 @@
 {% block content %}
 home page
 
-{% if user.is_authenticated %}
 
-    <h1>welcome{{user.username}}</h1>
 
 {% comment %} {%else%} {% endcomment %}
     {% comment %} <p><a href={% url 'login' %}>login</a> | <a href="{% url 'signup' %}">signup</a></p> {% endcomment %}
-{% endif %}
 {% endblock content %}
