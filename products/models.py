@@ -1,3 +1,4 @@
+from typing import Any, MutableMapping
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
@@ -26,6 +27,11 @@ class Product(models.Model):
         return reverse('product_detail', args=[self.id])
 
 
+class ActiveCommentsManagetr(models.Manager):
+    def get_queryset(self):
+        return super(ActiveCommentsManagetr, self).get_queryset().filter(active = True)
+
+
 class ProductComment(models.Model):
 
     Product_STARS = [
@@ -41,7 +47,15 @@ class ProductComment(models.Model):
     stars = models.CharField(max_length=10, choices=Product_STARS)
     datetime_created = models.DateTimeField(auto_now_add=True)
     datetime_modified = models.DateTimeField(auto_now=True)
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=False)
+
+    objects = models.Manager()
+    active_comments_managet = ActiveCommentsManagetr()
+
+    def get_absolute_url(self):
+        return reverse('comment_calidation')
+
+
 
 
 
