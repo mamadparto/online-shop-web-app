@@ -41,6 +41,7 @@
 
     <!-- Main Wrapper Start -->
     <div class="wrapper">
+
         <!-- Header Start -->
         <header class="header">
             <div class="header-inner fixed-header">
@@ -137,6 +138,14 @@
         <!-- Header End -->
 
 
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
 
         
 

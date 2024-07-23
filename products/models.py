@@ -53,7 +53,7 @@ class ProductComment(models.Model):
     active_comments_managet = ActiveCommentsManagetr()
 
     def get_absolute_url(self):
-        return reverse('comment_calidation')
+        return reverse('product_detail', args=[self.product.id])
 
 
 

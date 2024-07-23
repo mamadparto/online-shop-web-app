@@ -1,10 +1,9 @@
 from typing import Any
 from django.forms import BaseModelForm
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import reverse, get_object_or_404
 from django.views import generic
-import time
-
+from django.contrib import messages
 # from .models import Product, ProductComment
 from . import models
 from .forms import CommentForms
@@ -29,11 +28,9 @@ class ProductDetailView(generic.DetailView):
     
 
 
-def comment_validation(request):
-    
-    time.sleep(5)
-
-    return render(request, "products/comment_validation.html")
+# def comment_validation(request):
+#     # messages.success(request, message= 'After validation, your comment will be displayed')
+#     return render(request, "products/comment_validation.html")
 
 
 
@@ -42,13 +39,8 @@ class CommentCreatedView(generic.CreateView):
     form_class = CommentForms
 
 
-
-    # def get_success_url(self) -> str:
-    #     return render(template_name="products/comment_validation.html")
-    
-
-
     def form_valid(self, form):
+        messages.success(self.request, message= 'After validation, your comment will be displayed')
         obj = form.save(commit=False)
         obj.author = self.request.user
 
