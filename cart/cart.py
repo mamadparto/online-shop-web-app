@@ -10,7 +10,7 @@ class Cart:
         """
         self.request = request
 
-        self.session = self.session
+        self.session = request.session
 
         cart = self.session.get('cart')
 
@@ -29,7 +29,7 @@ class Cart:
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity' : quantity}
         else:
-            self.cart[product_id][quantity] += quantity
+            self.cart[product_id]['quantity'] += quantity
 
 
         self.save()
