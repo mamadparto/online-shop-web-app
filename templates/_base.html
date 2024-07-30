@@ -78,8 +78,15 @@
                                                 <span class="mm-text"> Contact Us </span>
                                             </a>
                                         </li>
+                                        <li class="mainmenu__item menu-item-has-children">
+                                            {% if user.is_authenticated %}
+                                                <span>welcome {{user.username}}    |   <a href={% url 'account_logout' %}> logout </a></span>
+                                            {% else %}
+                                                <span><a href="{% url 'account_login' %}">login</a>   |   <a href="{% url 'account_signup' %}"> signup </a></span>
+                                            {% endif %}
+                                        </li>
                                     </ul>
-                                </div>
+                                </div>  
                             </nav>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-sm-7 col-12 p-0">
@@ -92,7 +99,7 @@
                                 <li class="header-toolbar__item mini-cart-item">
                                     <a href="#miniCart" class="header-toolbar__btn toolbar-btn mini-cart-btn">
                                         <i class="flaticon flaticon-shopping-cart"></i>
-                                        <sup class="mini-cart-count">2</sup>
+                                        <sup class="mini-cart-count">{{cart|length}}</sup>
                                     </a>
                                 </li>
                                 <li class="header-toolbar__item user-info">
@@ -119,11 +126,7 @@
                                         <i class="flaticon flaticon-search"></i>
                                     </a>
                                 </li>
-                                {% if user.is_authenticated %}
-                                welcome {{user.username}} | <a href={% url 'account_logout' %}> logout </a>
-                            {% else %}
-                                <a href="{% url 'account_login' %}"> login </a> |  <a href="{% url 'account_signup' %}"> signup </a>
-                            {% endif %}
+                             
                             </ul>
                         </div>
                     </div>
@@ -140,11 +143,18 @@
 
 
         {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
+            <div class="contaicer" dir="rtl">
+
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{message}}</div>
+                    
+                {% endfor %}
+
+            </div>
+
+
+
+        
         {% endif %}
 
         
@@ -204,6 +214,8 @@
                     <h3 class="mini-cart__heading mb--40 mb-lg--30 text-right">Cart</h3>
                     <div class="mini-cart__content">
                         <ul class="mini-cart__list text-right">
+                            {% for item in cart %}
+                            
                             <li class="mini-cart__product d-flex justify-content-between">
                                 <div class="mini-cart__product__image">
                                     <a href="#">
@@ -212,59 +224,25 @@
                                 </div>
                                 <div class="mini-cart__product__content pt-2">
                                     <span class="mini-cart__product__title d-flex flex-row justify-content-between">
-                                        <a href="#">producut 1</a>
-                                        <a href="#" class="">
+                                        <a href="{{item.product_obj.get_absolute_url}}">{{item.product_obj.title}}</a>
+                                        <a href="{% url 'cart:cart_remove' item.product_obj.id %}" class="">
                                             &#10060;
                                         </a>
                                     </span>
                                     <span class="mini-cart__product__quantity">
-                                        <span>49$ </span> &#215; <span>۱</span>
+                                        <span>{{item.product_obj.price}}$ </span> &#215; <span>{{item.quantity}}</span>
                                     </span>
                                 </div>
                             </li>
-                            <li class="mini-cart__product d-flex justify-content-between">
-                                <div class="mini-cart__product__image">
-                                    <a href="#">
-                                        <img src="{% static 'img/products/prod-1-100x100.jpg' %}" alt="products">
-                                    </a>
-                                </div>
-                                <div class="mini-cart__product__content pt-2">
-                                    <span class="mini-cart__product__title d-flex flex-row justify-content-between">
-                                        <a href="#">product2</a>
-                                        <a href="#" class="">
-                                            &#10060;
-                                        </a>
-                                    </span>
-                                    <span class="mini-cart__product__quantity">
-                                        <span>49$</span> &#215; <span>۱</span>
-                                    </span>
-                                </div>
-                            </li>
-                            <li class="mini-cart__product d-flex justify-content-between">
-                                <div class="mini-cart__product__image">
-                                    <a href="#">
-                                        <img src="{% static 'img/products/prod-1-100x100.jpg' %}" alt="products">
-                                    </a>
-                                </div>
-                                <div class="mini-cart__product__content pt-2">
-                                    <span class="mini-cart__product__title d-flex flex-row justify-content-between">
-                                        <a href="#">product3</a>
-                                        <a href="#" class="">
-                                            &#10060;
-                                        </a>
-                                    </span>
-                                    <span class="mini-cart__product__quantity">
-                                        <span>49$</span> &#215; <span>۱</span>
-                                    </span>
-                                </div>
-                            </li>
+                            
+                            {% endfor %}
                         </ul>
                         <div class="mini-cart__total">
                             <span>Total</span>
-                            <span class="ammount">148$</span>
+                            <span class="ammount">{{cart.get_total_price}}$</span>
                         </div>
                         <div class="mini-cart__buttons">
-                            <a href="cart.html" class="btn btn-fullwidth btn-bg-sand mb--20">View Cart</a>
+                            <a href="{% url 'cart:cart_detail' %}" class="btn btn-fullwidth btn-bg-sand mb--20">View Cart</a>
                             <a href="checkout.html" class="btn btn-fullwidth btn-bg-sand">Payment</a>
                         </div>
                     </div>

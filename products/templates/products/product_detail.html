@@ -7,19 +7,7 @@
 
 {% block content %}
 
-        <!-- Breadcrumb area Start -->
-        <div class="breadcrumb-area bg-color ptb--90" data-bg-color="#f6f6f6">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="d-flex justify-content-between align-items-center flex-sm-row flex-column">
-                            <h1 class="page-title">  «{{product.title}}» product details </h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Breadcrumb area End -->
+        {% include 'topheader.html' with header_name=product.title%}
 
         <!-- Main Content Wrapper Start -->
         <div class="main-content-wrapper" dir="ltr">
@@ -164,13 +152,23 @@
                                                 <div class="row">
                                                     <div class="border-top py-5 w-100"></div>
                                                     <div class="col-lg-8 m-auto">
+                                                        
+
+                                                        {% if user.is_authenticated %}
                                                         <span class="reply-title pull-right">write your comment</span>
                                                         <br>
+                                                        
                                                         <form action="{% url 'comment_create' product.id %}" method="post">
                                                             {% csrf_token %}
                                                             {{comment_form|crispy}}
                                                             <input type="submit" value="submit">
                                                         </form>
+
+                                                        {% else %}
+
+                                                        <p>To write your comment pleas <a href="{% url 'account_login' %}">login</a></p>
+
+                                                        {% endif %}
                                                         
                                                     </div>
                                                 </div>

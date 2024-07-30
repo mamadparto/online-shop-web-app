@@ -43,7 +43,6 @@ class CommentCreatedView(generic.CreateView):
 
 
     def form_valid(self, form):
-        messages.success(self.request, message= 'After validation, your comment will be displayed')
         obj = form.save(commit=False)
         obj.author = self.request.user
 
@@ -51,5 +50,6 @@ class CommentCreatedView(generic.CreateView):
 
         Product = get_object_or_404( models.Product, id = int(self.kwargs['pk']))
         obj.product = Product
+        messages.success(self.request, message= 'After validation, your comment will be displayed')
 
         return super().form_valid(form)
