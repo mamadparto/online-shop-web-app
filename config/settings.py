@@ -195,4 +195,4 @@ ACCOUNT_UNIQUE_EMAIL = True
 
 # Media setings
 MEDIA_URL = '/media/'
-MEDIA_DIT = str(BASE_DIR.joinpath('media'))
+MEDIA_ROOT = str(BASE_DIR.joinpath('media/'))
