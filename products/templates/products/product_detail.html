@@ -15,14 +15,14 @@
                 <div class="container">
                     <div class="row no-gutters mb--80">
                         <div class="col-12 col-sm-4 product-main-image d-flex align-content-center">
-                            <img class="m-auto" style="max-height: 400px;" src="{{product.cover.url}}" alt="">
+                            <img class="m-auto" style="max-height: 400px;   background: url(blah.jpg) 50% 50% no-repeat; /* 50% 50% centers image in div */width: 250px;height: 350px;" src="{{product.cover.url}}" alt="">
                         </div>
                         <div class="col-12 col-sm-8 product-main-details mt-md--50">
                             <div class="product-summary pl-lg--30 pl-md--0 text-right p-4">
                                 <h3 class="product-title mb--20">{{product.title}}</h3>
-                                <p class="product-short-description mb--20">
-                                 {{product.discription}}
-                                </p>
+                                {% comment %} <p class="product-short-description mb--20 text-justify">
+                                 {{product.discription|safe|linebreaksbr}}
+                                </p> {% endcomment %}
                                 <div class="my-5 py-5 product-price-wrapper mb--25">
                                     <span class="money text-success">{{product.price}}$</span>
                                     <span class="price-separator">-</span>
@@ -84,7 +84,7 @@
                                     <div class="tab-pane fade show active" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab">
                                         <div class="product-description text-justify">
                                             <p>
-                                                {{product.discription}}
+                                                {{product.discription|safe}}
                                             </p>
                                         </div>
                                     </div>

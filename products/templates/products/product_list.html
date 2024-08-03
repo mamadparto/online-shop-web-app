@@ -38,9 +38,9 @@
                                         <div class="product-inner">
                                             <figure class="product-image">
                                                 <a href="{{product.get_absolute_url}}">
-                                                    {% if product.cover %}
-                                                        <img src="{{product.cover.url}}" alt="Products">
-                                                    {% endif %}
+                                                        {% if product.cover %}
+                                                                <img class="rounded" style="  background: url(blah.jpg) 50% 50% no-repeat; /* 50% 50% centers image in div */ width: 250px; height: 250px;" data-zoom src="{{ product.cover.url }}" alt="..."/>
+                                                        {% endif %}
                                                 </a>
                                                 <div class="ShoppingYar-product-action">
                                                     <div class="product-action d-flex">

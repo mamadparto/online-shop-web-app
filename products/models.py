@@ -2,6 +2,7 @@ from typing import Any, MutableMapping
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from ckeditor.fields import RichTextField
 
 
 status = (
@@ -11,7 +12,7 @@ status = (
 )
 class Product(models.Model):
     title = models.CharField(max_length=150)
-    discription = models.TextField()
+    discription = RichTextField()
     price = models.PositiveIntegerField(default=0)
     active = models.BooleanField(default=True)
     status = models.CharField(max_length=12 , choices=status)
