@@ -86,3 +86,11 @@ class Cart:
         products = Product.objects.filter(id__in=product_ids)
 
         return sum(item['quantity'] * item['product_obj'].price for item in self.cart.values())
+    
+
+    # def discount(self):
+    #     if Product.discount_percent != 0 :
+    #         vat = (Product.price * Product.discount_percent / 100)
+
+    #         item['total_price'] = item['product_obj'].price * item['quantity']
+    #         return 000000

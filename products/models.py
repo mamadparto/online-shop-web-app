@@ -10,10 +10,22 @@ status = (
     ('unavailable', 'unavailable'),
     ('coming_soon', 'comming soon')
 )
+
+class IntegerRangeField(models.IntegerField):
+    def __init__(self, verbose_name=None, name=None, min_value=None, max_value=None, **kwargs):
+        self.min_value, self.max_value = min_value, max_value
+        models.IntegerField.__init__(self, verbose_name, name, **kwargs)
+    def formfield(self, **kwargs):
+        defaults = {'min_value': self.min_value, 'max_value':self.max_value}
+        defaults.update(kwargs)
+        return super(IntegerRangeField, self).formfield(**defaults)
+
 class Product(models.Model):
     title = models.CharField(max_length=150)
     discription = RichTextField()
+    short_description = models.TextField(blank=True)
     price = models.PositiveIntegerField(default=0)
+    discount_percent = IntegerRangeField(default=0,min_value=1, max_value=30 ,blank=True)
     active = models.BooleanField(default=True)
     status = models.CharField(max_length=12 , choices=status)
     cover = models.ImageField(verbose_name='product image', upload_to='product/product_cover/', blank=True)
