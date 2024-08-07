@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
+from django.contrib import messages
 
 from products.models import Product
 from .forms import AddToCartProductForm
@@ -41,4 +42,17 @@ def remove_cart_view(request, product_id):
     cart.remove(product)
 
     return redirect('cart:cart_detail')
+
+@require_POST
+def clear_cart(request):
+    cart = Cart(request)
+
+    if len(cart):
+        cart.clear()
+        messages.success(request, 'All products successfully remmoved from your cart.')
+    else:
+        messages.success(request, 'your cart is already empty.')
+
+    return redirect('product_list')
+
     

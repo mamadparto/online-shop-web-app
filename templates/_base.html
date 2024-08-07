@@ -243,7 +243,9 @@
                         </div>
                         <div class="mini-cart__buttons">
                             <a href="{% url 'cart:cart_detail' %}" class="btn btn-fullwidth btn-bg-sand mb--20">View Cart</a>
-                            <a href="checkout.html" class="btn btn-fullwidth btn-bg-sand">Payment</a>
+                            {% if cart|length %}
+                                <a href="{% url 'order_created' %}" class="btn btn-fullwidth btn-bg-sand">Payment</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

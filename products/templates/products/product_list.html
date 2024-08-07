@@ -62,7 +62,19 @@
                                                         <span class="money text-danger"></span>
                                                     </span>
                                                 </div>
-                                                <a href="cart.html" class="btn btn-small btn-bg-sand btn-color-dark px-3">add to cart</a>
+                                                <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                        
+                                                    {% csrf_token %}
+            
+                                                    <div class="quantity-wrapper d-flex justify-content-start">
+                                                            <input type="hidden" class="quantity-input" name="quantity" id="qty" value="1" min="1">
+                                                    </div>
+                                                    <button type="submit" class="btn btn-small btn-bg-red btn-color-white btn-hover-2" onclick="window.location.href='cart.html'">
+                                                        add to cart
+                                                    </button> 
+            
+                                                
+                                            </form>
                                             </div>
                                         </div>
                                     </div>

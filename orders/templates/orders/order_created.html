@@ -1,5 +1,7 @@
 {% extends '_base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %} order {% endblock title %}
 
 
@@ -20,42 +22,51 @@
                                 <h2>product detail</h2>
                             </div>
                             <div class="checkout-form">
-                                <form action="#" class="form form--checkout">
+                                <form action="" method="post" class="form form--checkout">
+                                    {% csrf_token %}
+
+                                    {% if form.errors %}
+                                        <div class="alert alert-danger">
+                                            {{form.errors}}
+                                        </div>
+                                    {% endif %}
                                     <div class="form-row mb--20">
                                         <div class="form__group col-md-6 mb-sm--30">
-                                            <label for="billing_fname" class="form__label form__label--2">نام  <span class="required">*</span></label>
-                                            <input type="text" name="billing_fname" id="billing_fname" class="form__input form__input--2">
+                                            <label for="billing_fname" class="form__label form__label--2">first name  <span class="required">*</span></label>
+                                            <input type="text" name="first_name" id="billing_fname" class="form__input form__input--2" placeholder="Ali">
                                         </div>
                                         <div class="form__group col-md-6">
-                                            <label for="billing_lname" class="form__label form__label--2">نام خانوادگی  <span class="required">*</span></label>
-                                            <input type="text" name="billing_lname" id="billing_lname" class="form__input form__input--2">
+                                            <label for="billing_lname" class="form__label form__label--2"> last name  <span class="required">*</span></label>
+                                            <input type="text" name="last_name" id="billing_lname" class="form__input form__input--2" placeholder="ALavi">
                                         </div>
                                     </div>
                                     <div class="form-row mb--20">
                                         <div class="form__group col-12">
-                                            <label for="billing_company" class="form__label form__label--2">آدرس</label>
-                                            <input type="text" name="billing_company" id="billing_company" class="form__input form__input--2">
+                                            <label for="billing_company" class="form__label form__label--2">address</label>
+                                            <input type="text" name="address" id="billing_company" class="form__input form__input--2" placeholder="your address">
                                         </div>
                                     </div>
                                     <div class="form-row mb--20">
                                         <div class="form__group col-12">
-                                            <label for="billing_phone" class="form__label form__label--2">شماره همراه <span class="required">*</span></label>
-                                            <input type="text" name="billing_phone" id="billing_phone" class="form__input form__input--2">
-                                        </div>
-                                    </div>
-                                    <div class="form-row mb--20">
-                                        <div class="form__group col-12">
-                                            <label for="billing_email" class="form__label form__label--2">ایمیل  <span class="required">*</span></label>
-                                            <input type="email" name="billing_email" id="billing_email" class="form__input form__input--2">
+                                            <label for="billing_phone" class="form__label form__label--2">phon number  <span class="required">*</span></label>
+                                            <input type="text" name="phon_number" id="billing_phone" class="form__input form__input--2" placeholder="0922 123 4567">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form__group col-12">
-                                            <label for="orderNotes" class="form__label form__label--2">یادداشت شما</label>
-                                            <textarea class="form__input form__input--2 form__input--textarea" id="orderNotes" name="orderNotes" placeholder="اگر یادداشتی دارید در اینجا وارد کنید. در غیر این صورت این مکان را خالی بگذارید"></textarea>
+                                            <label for="orderNotes" class="form__label form__label--2"> your nots</label>
+                                            <textarea class="form__input form__input--2 form__input--textarea" id="order_nots" name="orderNotes" placeholder="write your not"></textarea>
                                         </div>
                                     </div>
+                                    <button class="btn btn-success" type="submit">submit</button>
                                 </form>
+
+                                {% comment %} <form action="">
+                                    {% csrf_token %}
+                                    {{forms | crispy}}
+                                    
+                                    <button class="btn btn-small btn-bg-red btn-color-white btn-hover-2" type="submit">checkout</button>
+                                </form> {% endcomment %}
                             </div>
                         </div>
                         <div class="col-xl-5 offset-xl-1 col-lg-6 mt-md--40">
@@ -77,7 +88,7 @@
                                             <th> {{ item.product_obj.title | truncatewords:2}}
                                                 <strong><span>&#10005;</span> {{item.quantity}}</strong>
                                             </th>
-                                            <td class="text-right">{{item.product_obj.price}}</td>
+                                            <td class="text-right">{{item.total_price}}</td>
                                             </tr>
                                             {% endfor %}
                                             <tr>
